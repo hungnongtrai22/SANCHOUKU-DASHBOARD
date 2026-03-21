@@ -24,7 +24,7 @@ export default function Header({ className }: { className?: string }) {
           href={'/'}
           className="me-4 hidden w-[155px] shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 xl:block"
         >
-          <Logo className="max-w-[155px]" />
+          {/* <Logo className="max-w-[155px]" /> */}
         </Link>
       </div>
 
@@ -38,7 +38,7 @@ export default function Header({ className }: { className?: string }) {
             href="/"
             className="me-4 w-9 shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 xl:hidden"
           >
-            <Logo iconOnly={true} />
+            {/* <Logo iconOnly={true} /> */}
           </Link>
           <SearchWidget
             icon={<PiMagnifyingGlass className="me-3 h-[20px] w-[20px]" />}

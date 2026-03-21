@@ -32,7 +32,9 @@ export default function DropboxResetPasswordEmail({
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={`${baseUrl}/static/dropbox-logo.png`}
+            // src={`${baseUrl}/static/dropbox-logo.png`}
+                        src={``}
+
             width="40"
             height="33"
             alt="Dropbox"

@@ -41,7 +41,9 @@ export default function AuthWrapperThree({
         >
           <div className="flex flex-col items-center">
             <Link href={'/'} className="mb-7 inline-block max-w-[64px] lg:mb-9">
-              <Image src={logoImg} alt="Isomorphic" className="dark:invert" />
+              {/* <Image src={logoImg} alt="Isomorphic" className="dark:invert" /> */}
+                            <Image src={""} alt="" className="dark:invert" />
+
             </Link>
             <Title
               as="h2"

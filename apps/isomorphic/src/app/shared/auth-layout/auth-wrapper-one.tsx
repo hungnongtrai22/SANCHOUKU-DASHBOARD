@@ -65,10 +65,12 @@ export default function AuthWrapperOne({
                 href={'/'}
                 className="mb-6 inline-flex max-w-[168px] xl:mb-8"
               >
-                <Image src={logoImg} alt="Isomorphic" />
+                {/* <Image src={logoImg} alt="Isomorphic" /> */}
+                                <Image src={""} alt="" />
+
                 <Image
-                  src={logoImgText}
-                  alt="Isomorphic"
+                  src={""}
+                  alt=""
                   className="ps-2.5 dark:invert"
                 />
               </Link>

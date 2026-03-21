@@ -86,7 +86,7 @@ export default function CreateEditFarmer({
       console.log('product_data', data);
       createFarmerHandler(data);
       toast.success(
-        <Text as="b">Product successfully {slug ? 'updated' : 'created'}</Text>
+        <Text as="b">{slug ? 'Cập nhập' : 'Thêm'} nông dân thành công</Text>
       );
       methods.reset();
     }, 600);
@@ -120,7 +120,7 @@ export default function CreateEditFarmer({
 
           <FormFooter
             isLoading={isLoading}
-            submitBtnText={slug ? 'Update Product' : 'Create Product'}
+            submitBtnText={slug ? 'Cập nhập nông dân' : 'Thêm nông dân'}
           />
         </form>
       </FormProvider>

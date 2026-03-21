@@ -24,7 +24,7 @@ export default function Header({ className }: FooterProps) {
         href={'/'}
         className="me-4 w-9 shrink-0 text-gray-800 hover:text-gray-900 md:w-[155px] lg:me-5 xl:block"
       >
-        <Logo iconOnly={isMobile} className="w-full" />
+        {/* <Logo iconOnly={isMobile} className="w-full" /> */}
       </Link>
       <div className="flex items-center gap-2">
         <Button

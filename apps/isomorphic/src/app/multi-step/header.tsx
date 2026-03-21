@@ -23,7 +23,9 @@ export default function Header({ className }: FooterProps) {
     >
       <Link href={'/'}>
         <Image
-          src={isMobile ? siteConfig.icon : siteConfig.logo}
+          // src={isMobile ? siteConfig.icon : siteConfig.logo}
+                    src={""}
+
           alt={siteConfig.title}
           className="invert"
           priority

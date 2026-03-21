@@ -18,7 +18,7 @@ export function CarbonDrawerSidebar({ className }: { className?: string }) {
           aria-label="Site Logo"
           className="text-gray-800 hover:text-gray-900"
         >
-          <Logo className="max-w-[155px]" />
+          {/* <Logo className="max-w-[155px]" /> */}
         </Link>
       </div>
 
