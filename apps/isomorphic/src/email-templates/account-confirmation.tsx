@@ -35,7 +35,7 @@ export default function VercelInviteUserEmail(
             />
           </Section>
           <Heading style={heading}>
-            Welcome to <strong>Isomorphic Furyroad</strong>
+            Welcome to <strong>SANCHOUKU</strong>
           </Heading>
           <Text style={subheading}>
             Hello <strong>{username}</strong>, (
