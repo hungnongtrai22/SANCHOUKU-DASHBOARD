@@ -2,7 +2,6 @@ import './src/env.mjs';
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  output: 'standalone', // Thêm dòng này
   images: {
     remotePatterns: [
       {
