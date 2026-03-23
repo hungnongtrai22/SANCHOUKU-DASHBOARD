@@ -45,7 +45,7 @@ export const farmersListColumns = [
       console.log('TEST', row);
       return (
         <AvatarCard
-          src={row.original?.avatar[0].url || ''}
+          src={row.original?.avatar[0]?.url || ''}
           name={row.original.name}
           description={row.original.nameFarm}
           avatarProps={{
