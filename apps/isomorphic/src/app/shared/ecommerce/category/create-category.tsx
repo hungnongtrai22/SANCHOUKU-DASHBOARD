@@ -224,8 +224,8 @@ export default function CreateCategory({
               >
                 <UploadZone
                   name="images"
-                  getValues={getValues}
-                  setValue={setValue}
+                  // getValues={getValues}
+                  // setValue={setValue}
                   className="col-span-full"
                 />
               </HorizontalFormBlockWrapper>

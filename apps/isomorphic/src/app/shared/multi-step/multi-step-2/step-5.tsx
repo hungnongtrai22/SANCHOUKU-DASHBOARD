@@ -51,7 +51,9 @@ export default function StepFive() {
           onSubmit={handleSubmit(onSubmit)}
           className="grid flex-grow gap-6 rounded-lg bg-white dark:bg-gray-0"
         >
-          <UploadZone name="photos" getValues={getValues} setValue={setValue} />
+          <UploadZone name="photos"
+          //  getValues={getValues} setValue={setValue} 
+           />
         </form>
       </div>
     </>

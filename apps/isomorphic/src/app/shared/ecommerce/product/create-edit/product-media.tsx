@@ -19,8 +19,8 @@ export default function ProductMedia({ className }: ProductMediaProps) {
       <UploadZone
         className="col-span-full"
         name="productImages"
-        getValues={getValues}
-        setValue={setValue}
+        // getValues={getValues}
+        // setValue={setValue}
       />
     </FormGroup>
   );

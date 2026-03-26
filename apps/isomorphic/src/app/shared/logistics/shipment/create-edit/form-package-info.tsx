@@ -79,8 +79,8 @@ export default function FormPackageInfo({ className }: FormPackageInfoProps) {
       <UploadZone
         name="packageInfoAttachment"
         className="col-span-full"
-        getValues={getValues}
-        setValue={setValue}
+        // getValues={getValues}
+        // setValue={setValue}
         error={errors?.packageInfoAttachment?.message as string}
       />
       <div className="mt-3">

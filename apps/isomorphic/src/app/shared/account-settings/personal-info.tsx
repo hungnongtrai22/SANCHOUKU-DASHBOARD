@@ -215,8 +215,8 @@ export default function PersonalInfoView() {
                 <div className="mb-5 @3xl:col-span-2">
                   <UploadZone
                     name="portfolios"
-                    getValues={getValues}
-                    setValue={setValue}
+                    // getValues={getValues}
+                    // setValue={setValue}
                     error={errors?.portfolios?.message as string}
                   />
                 </div>

@@ -120,8 +120,8 @@ export default function StepTwo() {
             <UploadZone
               name="photos"
               label="Upload Property Photo"
-              getValues={getValues}
-              setValue={setValue}
+              // getValues={getValues}
+              // setValue={setValue}
             />
           </>
         </form>

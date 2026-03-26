@@ -173,8 +173,8 @@ export default function FormShippingInfo() {
       <UploadZone
         name="shippingInfoAttachment"
         className="col-span-full"
-        getValues={getValues}
-        setValue={setValue}
+        // getValues={getValues}
+        // setValue={setValue}
         error={errors?.shippingInfoAttachment?.message as string}
       />
     </FormGroup>
