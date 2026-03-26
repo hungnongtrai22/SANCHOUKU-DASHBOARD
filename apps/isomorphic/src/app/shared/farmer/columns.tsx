@@ -109,7 +109,7 @@ export const farmersListColumns = [
     }) => (
       <Flex align="center" justify="end" gap="3" className="pe-4">
         <Tooltip size="sm" content={'Chỉnh Sửa'} placement="top" color="invert">
-          <Link href={routes.eCommerce.ediProduct(row.original.id)}>
+          <Link href={routes.farmer.farmerEdit(row.original?._id)}>
             <ActionIcon
               as="span"
               size="sm"

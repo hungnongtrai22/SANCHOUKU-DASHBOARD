@@ -18,8 +18,7 @@ export default function FarmerIdentifiers({
   const {
     register,
     formState: { errors },
-        control,
-
+    control,
   } = useFormContext();
 
   return (
@@ -31,6 +30,7 @@ export default function FarmerIdentifiers({
       <Input
         label="Đánh giá"
         placeholder="Đánh giá của nông trại"
+        className="col-span-full"
         {...register('rating')}
         // error={errors.tradeNumber?.message as string}
       />
@@ -38,9 +38,20 @@ export default function FarmerIdentifiers({
         label="Tiêu đề nông trại"
         placeholder="145782"
         {...register('aboutFarmTitle')}
+        className="col-span-full"
+
         // error={errors.manufacturerNumber?.message as string}
       />
-       <Controller
+
+       <Input
+        label="Tiêu đề nông trại tiếng nhật"
+        placeholder="145782"
+        {...register('aboutFarmTitleJP')}
+        className="col-span-full"
+
+        // error={errors.manufacturerNumber?.message as string}
+      />
+      <Controller
         control={control}
         name="aboutFarmContent"
         render={({ field: { onChange, value } }) => (
@@ -54,13 +65,35 @@ export default function FarmerIdentifiers({
         )}
       />
 
+      <Controller
+        control={control}
+        name="aboutFarmContentJP"
+        render={({ field: { onChange, value } }) => (
+          <QuillEditor
+            value={value}
+            onChange={onChange}
+            label="Nội dung về nông trại tiếng nhật"
+            className="col-span-full [&_.ql-editor]:min-h-[100px]"
+            labelClassName="font-medium text-gray-700 dark:text-gray-600 mb-1.5"
+          />
+        )}
+      />
+
       <Input
-              label="Tiêu đề tại sao chọn chúng tôi"
-              placeholder="Nội dung"
-              {...register('whyTitle')}
-              className="col-span-full"
-              error={errors.sku?.message as string}
-            />
+        label="Tiêu đề tại sao chọn chúng tôi"
+        placeholder="Nội dung"
+        {...register('whyTitle')}
+        className="col-span-full"
+        error={errors.sku?.message as string}
+      />
+
+      <Input
+        label="Tiêu đề tại sao chọn chúng tôi tiếng Nhật"
+        placeholder="Nội dung bằng tiếng nhật"
+        {...register('whyTitleJP')}
+        className="col-span-full"
+        error={errors.sku?.message as string}
+      />
       <CustomFields />
     </FormGroup>
   );

@@ -8,18 +8,23 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { PiTagBold, PiXBold } from 'react-icons/pi';
 
 export default function FarmerTags({ className }: { className?: string }) {
-  const [tags, setTags] = useState<string[]>([]);
   const {
     register,
     formState: { errors },
+    getValues
   } = useFormContext();
+    const [tags, setTags] = useState<string[]>(getValues("category"));
+    const [tagsJP, setTagsJP] = useState<string[]>(getValues("categoryJP"));
+
   return (
     <FormGroup
       title="Thông tin bổ sung"
       description="Thêm thông tin về nông dân và vùng trồng"
       className={cn(className)}
     >
-      <ItemCrud name="Category" items={tags} setItems={setTags} />
+      <ItemCrud name="category" items={tags} setItems={setTags} />
+            <ItemCrud name="categoryJP" items={tagsJP} setItems={setTagsJP} />
+
        {/* <Input
         label="Tên Nông Trại"
         placeholder="Tên của nông trại"
@@ -61,7 +66,7 @@ function handleItemRemove(text: string): void {
       <div className="flex items-center">
         <Input
           value={itemText}
-          placeholder={`Nhập danh mục`}
+          placeholder={`Danh mục ${name === 'categoryJP' ? 'tiếng Nhật' : ''}`}
           onChange={(e) => setItemText(e.target.value)}
           prefix={<PiTagBold className="h-4 w-4" />}
           className="w-full"

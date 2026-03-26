@@ -22,22 +22,29 @@ export const productVariants = [
 
 export function defaultValues(product?: any) {
   return {
-    title: product?.name ?? '',
-    // tags: product?.tags ?? [],
+     name: product?.name ?? '',
+    nameJP: product?.nameJP ?? '',
     nameFarm: product?.nameFarm ?? '',
+    nameFarmJP: product?.nameFarmJP ?? '',
     state: product?.state || null,
     ward: product?.ward || null,
     address: product?.address || '',
     shortIntroduce: product?.shortIntroduce || '',
-    avatar: product || [],
-    gallery: product || [],
-    video: product || [],
-    category: product || [],
+    shortIntroduceJP: product?.shortIntroduceJP || '',
+    avatar: product?.avatar || [],
+    gallery: product?.gallery || [],
+    video: product?.video || [],
+    category: product?.category || [],
+    categoryJP: product?.categoryJP || [],
     rating: product?.rating || null,
     aboutFarmTitle: product?.aboutFarmTitle || '',
+    aboutFarmTitleJP: product?.aboutFarmTitleJP || '',
     aboutFarmContent: product?.aboutFarmContent || '',
+    aboutFarmContentJP: product?.aboutFarmContentJP || '',
     whyTitle: product?.whyTitle || '',
-    whyContent: product || [],
+    whyTitleJP: product?.whyTitleJP || '',
+    whyContent: product?.whyContent || [],
+    whyContentJP: product?.whyContentJP || [],
   };
 }
 

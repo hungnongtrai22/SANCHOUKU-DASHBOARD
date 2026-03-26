@@ -4,7 +4,11 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import isEmpty from "lodash/isEmpty";
 import prettyBytes from "pretty-bytes";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { endsWith } from "lodash";
+import { FileWithPath } from "react-dropzone";
+import { ClientUploadedFileData } from "uploadthing/types";
+import { useFormContext } from "react-hook-form";
 import { useDropzone } from "@uploadthing/react";
 import { PiCheckBold, PiTrashBold, PiUploadSimpleBold } from "react-icons/pi";
 import { generateClientDropzoneAccept } from "uploadthing/client";
@@ -12,19 +16,14 @@ import { useUploadThing } from "../../utils/uploadthing";
 import { Button, Text, FieldError } from "rizzui";
 import cn from "../../utils/class-names";
 import UploadIcon from "../../components/shape/upload";
-import { endsWith } from "lodash";
-import { FileWithPath } from "react-dropzone";
-import { ClientUploadedFileData } from "uploadthing/types";
 
 interface UploadZoneProps {
   label?: string;
   name: string;
-  getValues: any;
-  setValue: any;
+  // getValues: any;
+  // setValue: any;
   className?: string;
   error?: string;
-  value?: any; // 👈 thêm
-  onChange?: any; // 👈 thêm
 }
 
 interface FileType {
@@ -37,12 +36,15 @@ export default function UploadZone({
   label,
   name,
   className,
-  getValues,
-  setValue,
+  // getValues,
+  // setValue,
   error,
-  value,
-  onChange,
 }: UploadZoneProps) {
+  const { getValues, setValue, watch } = useFormContext();
+
+  // useEffect(() => {
+  //   register(name);
+  // }, [name, register]);
   const [files, setFiles] = useState<File[]>([]);
 
   const onDrop = useCallback(
@@ -71,7 +73,23 @@ export default function UploadZone({
     setFiles(updatedFiles);
   }
 
-  const uploadedItems = value ?? (getValues ? getValues(name) : []) ?? [];
+  function handleRemoveUploaded(index: number) {
+    const currentItems = getValues(name) ?? [];
+    const updatedItems = currentItems.filter(
+      (_: any, i: number) => i !== index,
+    );
+        console.log(updatedItems);
+
+
+    setValue(name, updatedItems);
+  }
+
+  // let uploadedItems = value ?? (getValues ? getValues(name) : []) ?? [];
+  // uploadedItems = uploadedItems[`${name}`];
+  let temp = getValues("avatar") ?? [];
+  // console.log("Up", temp);
+  const uploadedItems = watch(name) ?? [];
+  // console.log("Up", uploadedItems);
 
   const notUploadedItems = files.filter(
     (file) =>
@@ -87,20 +105,30 @@ export default function UploadZone({
         res: ClientUploadedFileData<any>[] | undefined,
       ) => {
         console.log("res", res);
-        const respondedUrls = res?.map((r) => ({
-          name: r.name,
-          size: r.size,
-          url: r.url,
-        }));
+        const respondedUrls =
+          res?.map((r) => ({
+            name: r.name,
+            size: r.size,
+            url: r.url,
+          })) ?? [];
 
         setFiles([]);
 
-        // 👇 ưu tiên Controller
-        if (onChange) {
-          onChange(respondedUrls);
-        } else if (setValue) {
-          setValue(name, respondedUrls);
-        }
+        // 👇 lấy ảnh cũ
+        //         const currentItems = getValues(name) ?? [];
+        //         const oldItems = currentItems[`${name}`] || [];
+        //         // 👇 merge ảnh cũ + mới
+        //         const updatedItems = [...oldItems, ...respondedUrls];
+        // console.log("name", updatedItems);
+        //         setValue(name, updatedItems);
+        setValue(name, [...(getValues(name) ?? []), ...respondedUrls]);
+
+        // // 👇 ưu tiên Controller
+        // if (onChange) {
+        //   onChange(respondedUrls);
+        // } else if (setValue) {
+        //   setValue(name, respondedUrls);
+        // }
         toast.success(
           <Text as="b" className="font-semibold">
             portfolio Images updated
@@ -179,16 +207,23 @@ export default function UploadZone({
 
       {(!isEmpty(uploadedItems) || !isEmpty(notUploadedItems)) && (
         <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-[repeat(auto-fit,_minmax(140px,_1fr))]">
-          {uploadedItems.map((file: any, index: number) => (
+          {uploadedItems?.map((file: any, index: number) => (
             <div key={index} className={cn("relative")}>
               <figure className="group relative h-40 rounded-md bg-gray-50">
                 <MediaPreview name={file.name} url={file.url} />
                 <button
                   type="button"
+                  onClick={() => handleRemoveUploaded(index)}
+                  className="absolute right-0 top-0 rounded-full bg-gray-700/70 p-1.5 opacity-20 transition duration-300 hover:bg-red-dark group-hover:opacity-100"
+                >
+                  <PiTrashBold className="text-white" />
+                </button>
+                {/* <button
+                  type="button"
                   className="absolute right-0 top-0 rounded-full bg-gray-700 p-1.5 transition duration-300"
                 >
                   <PiCheckBold className="text-white" />
-                </button>
+                </button> */}
               </figure>
               <MediaCaption name={file.name} size={file.size} />
             </div>

@@ -49,7 +49,7 @@ const MAP_STEP_TO_COMPONENT = {
 interface IndexProps {
   slug?: string;
   className?: string;
-  product?: CreateProductInput;
+  product?: any;
 }
 
 export default function CreateEditFarmer({
@@ -70,7 +70,22 @@ export default function CreateEditFarmer({
       // console.log("Year",date.getFullYear());
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_BE_HOST}/api/farmer/create`,
-        {...farmer, popularProduct: []}
+        { ...farmer, popularProduct: [] }
+      );
+
+      // setNewFarmers(data.farmers);
+    },
+    []
+    // [date]
+  );
+
+  const editFarmerHandler = useCallback(
+    async (farmer?: any) => {
+      // console.log("Month",date.getMonth());
+      // console.log("Year",date.getFullYear());
+      const { data } = await axios.put(
+        `${process.env.NEXT_PUBLIC_BE_HOST}/api/farmer/edit`,
+        { ...farmer, _id: slug }
       );
 
       // setNewFarmers(data.farmers);
@@ -84,7 +99,11 @@ export default function CreateEditFarmer({
     setTimeout(() => {
       setLoading(false);
       console.log('product_data', data);
-      createFarmerHandler(data);
+      if (slug) {
+        editFarmerHandler(data);
+      } else {
+        createFarmerHandler(data);
+      }
       toast.success(
         <Text as="b">{slug ? 'Cập nhập' : 'Thêm'} nông dân thành công</Text>
       );

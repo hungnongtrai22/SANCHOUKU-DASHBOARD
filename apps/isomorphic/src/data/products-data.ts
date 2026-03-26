@@ -11,6 +11,7 @@ export type ProductType = {
 };
 
 export type FarmerType = {
+  _id: string;
   id: string;
   name: string;
   category: string;

@@ -75,6 +75,19 @@ export default function FarmerSummary({ className }: { className?: string }) {
       />
 
       <Input
+        label="Tên Katakana"
+        placeholder="Tên Katakana của nông dân"
+        {...register('nameJP')}
+        error={errors.title?.message as string}
+      />
+      <Input
+        label="Tên Nông Trại Tiếng Nhật"
+        placeholder="Tên của nông trại bằng tiếng nhật"
+        {...register('nameFarmJP')}
+        // error={errors.sku?.message as string}
+      />
+
+      <Input
         label="Địa chỉ"
         placeholder="Địa chỉ của nông trại"
         {...register('address')}
@@ -140,6 +153,20 @@ setWards([]);
             value={value}
             onChange={onChange}
             label="Giới thiệu ngắn về nông trại"
+            className="col-span-full [&_.ql-editor]:min-h-[100px]"
+            labelClassName="font-medium text-gray-700 dark:text-gray-600 mb-1.5"
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="shortIntroduceJP"
+        render={({ field: { onChange, value } }) => (
+          <QuillEditor
+            value={value}
+            onChange={onChange}
+            label="Giới thiệu ngắn về nông trại tiếng nhật"
             className="col-span-full [&_.ql-editor]:min-h-[100px]"
             labelClassName="font-medium text-gray-700 dark:text-gray-600 mb-1.5"
           />

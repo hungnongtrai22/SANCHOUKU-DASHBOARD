@@ -44,6 +44,32 @@ export default function CustomFields() {
           )}
         </div>
       ))}
+
+       {fields.map((item, index) => (
+        <div key={item.id} className="col-span-full flex gap-4 xl:gap-7">
+          <Input
+            label="Lý do tiếng nhật"
+            placeholder="lý do"
+            className="flex-grow"
+            {...register(`whyContentJP.${index}.label`)}
+          />
+          <Input
+            label="Nội dung tiếng nhật"
+            placeholder="nội dung"
+            className="flex-grow"
+            {...register(`whyContentJP.${index}.value`)}
+          />
+          {fields.length > 1 && (
+            <ActionIcon
+              onClick={() => remove(index)}
+              variant="flat"
+              className="mt-7 shrink-0"
+            >
+              <TrashIcon className="h-4 w-4" />
+            </ActionIcon>
+          )}
+        </div>
+      ))}
       <Button
         onClick={addCustomField}
         variant="outline"
