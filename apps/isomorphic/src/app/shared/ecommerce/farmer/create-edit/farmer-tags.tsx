@@ -50,7 +50,7 @@ function ItemCrud({ name, items, setItems }: ItemCrudProps) {
       const newItem: string = itemText;
 
       setItems([...items, newItem]);
-      setValue('category', [...items, newItem]);
+      setValue(name, [...items, newItem]);
       setItemText('');
     }
   }
@@ -58,7 +58,7 @@ function ItemCrud({ name, items, setItems }: ItemCrudProps) {
 function handleItemRemove(text: string): void {
   const updatedItems = items.filter((item) => item !== text);
   setItems(updatedItems);
-  setValue('category', updatedItems); // 👈 thêm dòng này
+  setValue(name, updatedItems); // 👈 thêm dòng này
 }
 
   return (
