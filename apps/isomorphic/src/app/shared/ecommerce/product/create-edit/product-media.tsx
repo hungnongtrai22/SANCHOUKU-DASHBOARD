@@ -8,7 +8,7 @@ interface ProductMediaProps {
 }
 
 export default function ProductMedia({ className }: ProductMediaProps) {
-  const { getValues, setValue } = useFormContext();
+  const { getValues, setValue, watch } = useFormContext();
 
   return (
     <FormGroup
@@ -19,8 +19,9 @@ export default function ProductMedia({ className }: ProductMediaProps) {
       <UploadZone
         className="col-span-full"
         name="productImages"
-        // getValues={getValues}
-        // setValue={setValue}
+        getValues={getValues}
+        setValue={setValue}
+        watch={watch}
       />
     </FormGroup>
   );

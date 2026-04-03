@@ -20,8 +20,9 @@ import UploadIcon from "../../components/shape/upload";
 interface UploadZoneProps {
   label?: string;
   name: string;
-  // getValues: any;
-  // setValue: any;
+  getValues: any;
+  setValue: any;
+  watch: any;
   className?: string;
   error?: string;
 }
@@ -36,11 +37,12 @@ export default function UploadZone({
   label,
   name,
   className,
-  // getValues,
-  // setValue,
+  getValues,
+  setValue,
+  watch,
   error,
 }: UploadZoneProps) {
-  const { getValues, setValue, watch } = useFormContext();
+  // const {watch } = useFormContext();
 
   // useEffect(() => {
   //   register(name);

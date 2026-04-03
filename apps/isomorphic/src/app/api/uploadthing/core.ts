@@ -14,7 +14,7 @@ export const ourFileRouter = {
     .onUploadComplete((data) => console.log('file', data)),
 
   generalMedia: f({
-    'application/pdf': { maxFileSize: '4MB', maxFileCount: 4 },
+    'application/pdf': { maxFileSize: '256MB', maxFileCount: 4 },
     image: { maxFileSize: '16MB', maxFileCount: 10 },
     video: { maxFileSize: '256MB', maxFileCount: 1 },
   })

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { SubmitHandler, Controller } from 'react-hook-form';
 import SelectLoader from '@core/components/loader/select-loader';
@@ -13,6 +13,7 @@ import {
   categoryFormSchema,
 } from '@/validators/create-category.schema';
 import UploadZone from '@core/ui/file-upload/upload-zone';
+import axios from 'axios';
 
 // const Select = dynamic(() => import('rizzui').then((mod) => mod.Select), {
 //   ssr: false,
@@ -102,31 +103,47 @@ function HorizontalFormBlockWrapper({
 }
 
 // main category form component for create and update category
-export default function CreateCategory({
+export default function CreateCenter({
   id,
   category,
   isModalView = true,
 }: {
   id?: string;
   isModalView?: boolean;
-  category?: any;
+  category?: CategoryFormInput;
 }) {
   const [reset, setReset] = useState({});
   const [isLoading, setLoading] = useState(false);
 
+   const createCenterHandler = useCallback(
+      async (center?: any) => {
+        // console.log("Month",date.getMonth());
+        // console.log("Year",date.getFullYear());
+        const { data } = await axios.post(
+          `${process.env.NEXT_PUBLIC_BE_HOST}/api/center/create`,
+          { ...center }
+        );
+  
+        // setNewFarmers(data.farmers);
+      },
+      []
+      // [date]
+    );
+
   const onSubmit: SubmitHandler<CategoryFormInput> = (data) => {
     // set timeout ony required to display loading state of the create category button
     setLoading(true);
+    createCenterHandler(data);
     setTimeout(() => {
       setLoading(false);
       console.log('createCategory data ->', data);
       setReset({
-        name: '',
-        slug: '',
-        type: '',
-        parentCategory: '',
-        description: '',
-        images: '',
+        // name: '',
+        // slug: '',
+        // type: '',
+        // parentCategory: '',
+        // description: '',
+        regulation: '',
       });
     }, 600);
   };
@@ -142,14 +159,7 @@ export default function CreateCategory({
       }}
       className="isomorphic-form flex flex-grow flex-col @container"
     >
-      {({
-        register,
-        control,
-        getValues,
-        setValue,
-        watch,
-        formState: { errors },
-      }) => (
+      {({ register, control, getValues, setValue, watch, formState: { errors } }) => (
         <>
           <div className="flex-grow pb-10">
             <div
@@ -160,12 +170,12 @@ export default function CreateCategory({
                   : 'gap-5'
               )}
             >
-              <HorizontalFormBlockWrapper
+              {/* <HorizontalFormBlockWrapper
                 title={'Add new category:'}
                 description={'Edit your category information from here'}
                 isModalView={isModalView}
               >
-                {/* <Input
+                <Input
                   label="Category Name"
                   placeholder="category name"
                   {...register('name')}
@@ -206,9 +216,9 @@ export default function CreateCategory({
                       getOptionValue={(option) => option.label}
                     />
                   )}
-                /> */}
+                />
 
-                {/* <div className="col-span-2">
+                <div className="col-span-2">
                   <Controller
                     control={control}
                     name="description"
@@ -222,20 +232,20 @@ export default function CreateCategory({
                       />
                     )}
                   />
-                </div> */}
-              </HorizontalFormBlockWrapper>
+                </div>
+              </HorizontalFormBlockWrapper> */}
               <HorizontalFormBlockWrapper
-                title="Upload new thumbnail image"
-                description="Upload your product image gallery here"
+                title="Quy Định Của Trung Tâm"
+                description="Tải lên file pdf quy định của trung tâm"
                 isModalView={isModalView}
               >
-                {/* <UploadZone
-                  name="images"
+                <UploadZone
+                  name="regulation"
                   getValues={getValues}
                   setValue={setValue}
-                  watch={watch}
                   className="col-span-full"
-                /> */}
+                  watch={watch}
+                />
               </HorizontalFormBlockWrapper>
             </div>
           </div>

@@ -102,14 +102,14 @@ function HorizontalFormBlockWrapper({
 }
 
 // main category form component for create and update category
-export default function CreateCategory({
+export default function CreateEmployee({
   id,
   category,
   isModalView = true,
 }: {
   id?: string;
   isModalView?: boolean;
-  category?: any;
+  category?: CategoryFormInput;
 }) {
   const [reset, setReset] = useState({});
   const [isLoading, setLoading] = useState(false);
@@ -142,14 +142,7 @@ export default function CreateCategory({
       }}
       className="isomorphic-form flex flex-grow flex-col @container"
     >
-      {({
-        register,
-        control,
-        getValues,
-        setValue,
-        watch,
-        formState: { errors },
-      }) => (
+      {({ register, control, getValues, setValue, watch, formState: { errors } }) => (
         <>
           <div className="flex-grow pb-10">
             <div
@@ -208,8 +201,8 @@ export default function CreateCategory({
                   )}
                 /> */}
 
-                {/* <div className="col-span-2">
-                  <Controller
+                <div className="col-span-2">
+                  {/* <Controller
                     control={control}
                     name="description"
                     render={({ field: { onChange, value } }) => (
@@ -221,8 +214,8 @@ export default function CreateCategory({
                         labelClassName="font-medium text-gray-700 dark:text-gray-600 mb-1.5"
                       />
                     )}
-                  />
-                </div> */}
+                  /> */}
+                </div>
               </HorizontalFormBlockWrapper>
               <HorizontalFormBlockWrapper
                 title="Upload new thumbnail image"
@@ -233,8 +226,8 @@ export default function CreateCategory({
                   name="images"
                   getValues={getValues}
                   setValue={setValue}
-                  watch={watch}
                   className="col-span-full"
+                  watch={watch}
                 /> */}
               </HorizontalFormBlockWrapper>
             </div>

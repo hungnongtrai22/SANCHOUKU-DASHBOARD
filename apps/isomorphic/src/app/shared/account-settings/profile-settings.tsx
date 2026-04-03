@@ -49,6 +49,7 @@ export default function ProfileSettingsView() {
           control,
           getValues,
           setValue,
+          watch,
           formState: { errors },
         }) => {
           return (
@@ -185,8 +186,9 @@ export default function ProfileSettingsView() {
                   <div className="@3xl:col-span-2">
                     <UploadZone
                       name="portfolios"
-                      // getValues={getValues}
-                      // setValue={setValue}
+                      getValues={getValues}
+                      setValue={setValue}
+                      watch={watch}
                       error={errors?.portfolios?.message as string}
                     />
                   </div>

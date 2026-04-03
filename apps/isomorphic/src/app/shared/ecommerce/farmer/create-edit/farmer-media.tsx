@@ -8,7 +8,7 @@ interface ProductMediaProps {
 }
 
 export default function FarmerMedia({ className }: ProductMediaProps) {
-  // const { getValues, setValue } = useFormContext();
+  const { getValues, setValue, watch } = useFormContext();
 
   return (
     <FormGroup
@@ -29,25 +29,28 @@ export default function FarmerMedia({ className }: ProductMediaProps) {
        <UploadZone
         className="col-span-full"
         name="avatar"
-        // getValues={getValues}
-        // setValue={setValue}
+        getValues={getValues}
+        setValue={setValue}
         label="Hình ảnh nông dân"
+        watch={watch}
       />
 
       <UploadZone
         className="col-span-full"
         name="gallery"
-        // getValues={getValues}
-        // setValue={setValue}
+        getValues={getValues}
+        setValue={setValue}
         label="Hình ảnh vùng trồng"
+        watch={watch}
       />
 
        <UploadZone
         className="col-span-full"
         name="video"
-        // getValues={getValues}
-        // setValue={setValue}
+        getValues={getValues}
+        setValue={setValue}
         label="Video giới thiệu vùng trồng"
+        watch={watch}
       />
     </FormGroup>
   );

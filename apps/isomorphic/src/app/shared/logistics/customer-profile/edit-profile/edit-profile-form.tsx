@@ -79,6 +79,7 @@ export default function EditProfileForm({ className }: EditProfileFormProps) {
           control,
           setValue,
           getValues,
+          watch,
           formState: { errors },
         }) => {
           return (
@@ -92,8 +93,9 @@ export default function EditProfileForm({ className }: EditProfileFormProps) {
               <UploadZone
                 label="Cover Photo"
                 name="coverPhoto"
-                // setValue={setValue}
-                // getValues={getValues}
+                setValue={setValue}
+                getValues={getValues}
+                watch={watch}
                 className="col-span-full"
               />
               <Input

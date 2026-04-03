@@ -1,6 +1,7 @@
 import { DUMMY_ID } from '@/config/constants';
 import { routes } from '@/config/routes';
 import BarnIcon from '@core/components/icons/barn';
+import UserFamilyColorIcon from '@core/components/icons/user-family-color';
 import UsersColorIcon from '@core/components/icons/users-color';
 import {
   PiAirplaneTiltDuotone,
@@ -174,6 +175,65 @@ export const menuItems = [
       {
         name: 'Thêm thành viên',
         href: routes.sanchouku.employeeCreate,
+      },
+      // {
+      //   name: 'Edit Product',
+      //   href: routes.eCommerce.ediProduct(DUMMY_ID),
+      // },
+      // {
+      //   name: 'Categories',
+      //   href: routes.eCommerce.categories,
+      // },
+      // {
+      //   name: 'Create Category',
+      //   href: routes.eCommerce.createCategory,
+      // },
+      // {
+      //   name: 'Edit Category',
+      //   href: routes.eCommerce.editCategory(DUMMY_ID),
+      // },
+      // {
+      //   name: 'Orders',
+      //   href: routes.eCommerce.orders,
+      // },
+      // {
+      //   name: 'Order Details',
+      //   href: routes.eCommerce.orderDetails(DUMMY_ID),
+      // },
+      // {
+      //   name: 'Create Order',
+      //   href: routes.eCommerce.createOrder,
+      // },
+      // {
+      //   name: 'Edit Order',
+      //   href: routes.eCommerce.editOrder(DUMMY_ID),
+      // },
+      // {
+      //   name: 'Reviews',
+      //   href: routes.eCommerce.reviews,
+      // },
+      // {
+      //   name: 'Shop',
+      //   href: routes.eCommerce.shop,
+      // },
+      // {
+      //   name: 'Cart',
+      //   href: routes.eCommerce.cart,
+      // },
+      // {
+      //   name: 'Checkout & Payment',
+      //   href: routes.eCommerce.checkout,
+      // },
+    ],
+  },
+  {
+    name: 'Trung Tâm',
+    href: '#',
+    icon: <UserFamilyColorIcon />,
+    dropdownItems: [
+      {
+        name: 'Thông Tin Trung Tâm',
+        href: routes.sanchouku.center,
       },
       // {
       //   name: 'Edit Product',

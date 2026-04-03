@@ -22,6 +22,7 @@ export default function StepFive() {
     handleSubmit,
     getValues,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<FormPhotosSchema>({
     resolver: zodResolver(formPhotosSchema),
@@ -52,7 +53,8 @@ export default function StepFive() {
           className="grid flex-grow gap-6 rounded-lg bg-white dark:bg-gray-0"
         >
           <UploadZone name="photos"
-          //  getValues={getValues} setValue={setValue} 
+           getValues={getValues} setValue={setValue} 
+           watch={watch}
            />
         </form>
       </div>

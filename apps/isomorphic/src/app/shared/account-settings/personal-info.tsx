@@ -49,7 +49,14 @@ export default function PersonalInfoView() {
         defaultValues,
       }}
     >
-      {({ register, control, setValue, getValues, formState: { errors } }) => {
+      {({
+        register,
+        control,
+        setValue,
+        getValues,
+        watch,
+        formState: { errors },
+      }) => {
         return (
           <>
             <FormGroup
@@ -215,8 +222,9 @@ export default function PersonalInfoView() {
                 <div className="mb-5 @3xl:col-span-2">
                   <UploadZone
                     name="portfolios"
-                    // getValues={getValues}
-                    // setValue={setValue}
+                    getValues={getValues}
+                    setValue={setValue}
+                    watch={watch}
                     error={errors?.portfolios?.message as string}
                   />
                 </div>

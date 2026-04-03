@@ -36,6 +36,7 @@ export default function StepTwo() {
     control,
     setValue,
     getValues,
+    watch,
     formState: { errors },
     handleSubmit,
   } = useForm<FormStep7Schema>({
@@ -120,8 +121,9 @@ export default function StepTwo() {
             <UploadZone
               name="photos"
               label="Upload Property Photo"
-              // getValues={getValues}
-              // setValue={setValue}
+              getValues={getValues}
+              setValue={setValue}
+              watch={watch}
             />
           </>
         </form>
