@@ -10,6 +10,8 @@ export const categoryFormSchema = z.object({
   // parentCategory: z.string().optional(),
   // description: z.string().optional(),
   regulation: z.array(fileSchema).optional(),
+  pgs: z.any(),
+  cgap: z.any(),
 });
 
 // generate form types from zod validation schema

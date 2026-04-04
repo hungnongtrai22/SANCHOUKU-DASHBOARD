@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { SubmitHandler, Controller } from 'react-hook-form';
 import SelectLoader from '@core/components/loader/select-loader';
@@ -112,23 +112,24 @@ export default function CreateCenter({
   isModalView?: boolean;
   category?: CategoryFormInput;
 }) {
+  console.log(id, category);
   const [reset, setReset] = useState({});
   const [isLoading, setLoading] = useState(false);
 
-   const createCenterHandler = useCallback(
-      async (center?: any) => {
-        // console.log("Month",date.getMonth());
-        // console.log("Year",date.getFullYear());
-        const { data } = await axios.post(
-          `${process.env.NEXT_PUBLIC_BE_HOST}/api/center/create`,
-          { ...center }
-        );
-  
-        // setNewFarmers(data.farmers);
-      },
-      []
-      // [date]
-    );
+  const createCenterHandler = useCallback(
+    async (center?: any) => {
+      // console.log("Month",date.getMonth());
+      // console.log("Year",date.getFullYear());
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_BE_HOST}/api/center/create`,
+        { ...center }
+      );
+
+      // setNewFarmers(data.farmers);
+    },
+    []
+    // [date]
+  );
 
   const onSubmit: SubmitHandler<CategoryFormInput> = (data) => {
     // set timeout ony required to display loading state of the create category button
@@ -138,18 +139,20 @@ export default function CreateCenter({
       setLoading(false);
       console.log('createCategory data ->', data);
       setReset({
-        // name: '',
-        // slug: '',
-        // type: '',
-        // parentCategory: '',
-        // description: '',
         regulation: '',
+        pgs: '',
+        cgap: '',
       });
     }, 600);
   };
 
+  // console.log(center);
+
+  // if (!center) return null;
+
   return (
     <Form<CategoryFormInput>
+      key={id} // 👈 thêm dòng này
       validationSchema={categoryFormSchema}
       resetValues={reset}
       onSubmit={onSubmit}
@@ -159,18 +162,32 @@ export default function CreateCenter({
       }}
       className="isomorphic-form flex flex-grow flex-col @container"
     >
-      {({ register, control, getValues, setValue, watch, formState: { errors } }) => (
-        <>
-          <div className="flex-grow pb-10">
-            <div
-              className={cn(
-                'grid grid-cols-1',
-                isModalView
-                  ? 'grid grid-cols-1 gap-8 divide-y divide-dashed divide-gray-200 @2xl:gap-10 @3xl:gap-12 [&>div]:pt-7 first:[&>div]:pt-0 @2xl:[&>div]:pt-9 @3xl:[&>div]:pt-11'
-                  : 'gap-5'
-              )}
-            >
-              {/* <HorizontalFormBlockWrapper
+      {({
+        register,
+        control,
+        getValues,
+        setValue,
+        watch,
+        reset,
+        formState: { errors },
+      }) => {
+        useEffect(() => {
+          if (category) {
+            reset(category);
+          }
+        }, [category, reset]);
+        return (
+          <>
+            <div className="flex-grow pb-10">
+              <div
+                className={cn(
+                  'grid grid-cols-1',
+                  isModalView
+                    ? 'grid grid-cols-1 gap-8 divide-y divide-dashed divide-gray-200 @2xl:gap-10 @3xl:gap-12 [&>div]:pt-7 first:[&>div]:pt-0 @2xl:[&>div]:pt-9 @3xl:[&>div]:pt-11'
+                    : 'gap-5'
+                )}
+              >
+                {/* <HorizontalFormBlockWrapper
                 title={'Add new category:'}
                 description={'Edit your category information from here'}
                 isModalView={isModalView}
@@ -234,41 +251,68 @@ export default function CreateCenter({
                   />
                 </div>
               </HorizontalFormBlockWrapper> */}
-              <HorizontalFormBlockWrapper
-                title="Quy Định Của Trung Tâm"
-                description="Tải lên file pdf quy định của trung tâm"
-                isModalView={isModalView}
-              >
-                <UploadZone
-                  name="regulation"
-                  getValues={getValues}
-                  setValue={setValue}
-                  className="col-span-full"
-                  watch={watch}
-                />
-              </HorizontalFormBlockWrapper>
+                <HorizontalFormBlockWrapper
+                  title="Quy Định Của Trung Tâm"
+                  description="Tải lên file pdf quy định của trung tâm"
+                  isModalView={isModalView}
+                >
+                  <UploadZone
+                    name="regulation"
+                    getValues={getValues}
+                    setValue={setValue}
+                    className="col-span-full"
+                    watch={watch}
+                  />
+                </HorizontalFormBlockWrapper>
+                <HorizontalFormBlockWrapper
+                  title="PGS Của Trung Tâm"
+                  description="Tải lên file pdf PGS của trung tâm"
+                  isModalView={isModalView}
+                >
+                  <UploadZone
+                    name="pgs"
+                    getValues={getValues}
+                    setValue={setValue}
+                    className="col-span-full"
+                    watch={watch}
+                  />
+                </HorizontalFormBlockWrapper>
+                 <HorizontalFormBlockWrapper
+                  title="Tiêu chuẩn C-Gap Của Trung Tâm"
+                  description="Tải lên file pdf C-Gap của trung tâm"
+                  isModalView={isModalView}
+                >
+                  <UploadZone
+                    name="pgs"
+                    getValues={getValues}
+                    setValue={setValue}
+                    className="col-span-full"
+                    watch={watch}
+                  />
+                </HorizontalFormBlockWrapper>
+              </div>
             </div>
-          </div>
 
-          <div
-            className={cn(
-              'sticky bottom-0 z-40 flex items-center justify-end gap-3 bg-gray-0/10 backdrop-blur @lg:gap-4 @xl:grid @xl:auto-cols-max @xl:grid-flow-col',
-              isModalView ? '-mx-10 -mb-7 px-10 py-5' : 'py-1'
-            )}
-          >
-            <Button variant="outline" className="w-full @xl:w-auto">
-              Save as Draft
-            </Button>
-            <Button
-              type="submit"
-              isLoading={isLoading}
-              className="w-full @xl:w-auto"
+            <div
+              className={cn(
+                'sticky bottom-0 z-40 flex items-center justify-end gap-3 bg-gray-0/10 backdrop-blur @lg:gap-4 @xl:grid @xl:auto-cols-max @xl:grid-flow-col',
+                isModalView ? '-mx-10 -mb-7 px-10 py-5' : 'py-1'
+              )}
             >
-              {id ? 'Update' : 'Create'} Category
-            </Button>
-          </div>
-        </>
-      )}
+              <Button variant="outline" className="w-full @xl:w-auto">
+                Save as Draft
+              </Button>
+              <Button
+                type="submit"
+                isLoading={isLoading}
+                className="w-full @xl:w-auto"
+              >
+                {id ? 'Update' : 'Create'} Category
+              </Button>
+            </div>
+          </>
+        );
+      }}
     </Form>
   );
 }
