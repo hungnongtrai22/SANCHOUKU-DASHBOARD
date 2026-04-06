@@ -283,7 +283,7 @@ export default function CreateCenter({
                   isModalView={isModalView}
                 >
                   <UploadZone
-                    name="pgs"
+                    name="cgap"
                     getValues={getValues}
                     setValue={setValue}
                     className="col-span-full"

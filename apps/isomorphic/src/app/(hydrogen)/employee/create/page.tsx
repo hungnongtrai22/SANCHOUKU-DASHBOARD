@@ -11,18 +11,18 @@ export const metadata = {
 };
 
 const pageHeader = {
-  title: 'Create A Category',
+  title: 'Thêm thành viên',
   breadcrumb: [
     {
-      href: routes.eCommerce.dashboard,
-      name: 'E-Commerce',
+      href: routes.sanchouku.employeeList,
+      name: 'SANCHOUKU',
     },
     {
-      href: routes.eCommerce.categories,
-      name: 'Categories',
+      href: routes.sanchouku.employeeList,
+      name: 'Danh Sách Thành Viên',
     },
     {
-      name: 'Create',
+      name: 'Tạo',
     },
   ],
 };
