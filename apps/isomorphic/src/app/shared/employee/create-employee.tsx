@@ -158,13 +158,13 @@ export default function CreateEmployee({
                 description={'Edit your category information from here'}
                 isModalView={isModalView}
               >
-                {/* <Input
+               {/* <Input
                   label="Category Name"
                   placeholder="category name"
                   {...register('name')}
                   error={errors.name?.message}
-                />
-                <Input
+                /> */}
+                  {/*<Input
                   label="Slug"
                   placeholder="slug"
                   {...register('slug')}

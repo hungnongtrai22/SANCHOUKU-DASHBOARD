@@ -277,7 +277,7 @@ export default function CreateCenter({
                     watch={watch}
                   />
                 </HorizontalFormBlockWrapper>
-                 <HorizontalFormBlockWrapper
+                 {/* <HorizontalFormBlockWrapper
                   title="Tiêu chuẩn C-Gap Của Trung Tâm"
                   description="Tải lên file pdf C-Gap của trung tâm"
                   isModalView={isModalView}
@@ -289,7 +289,7 @@ export default function CreateCenter({
                     className="col-span-full"
                     watch={watch}
                   />
-                </HorizontalFormBlockWrapper>
+                </HorizontalFormBlockWrapper> */}
               </div>
             </div>
 
