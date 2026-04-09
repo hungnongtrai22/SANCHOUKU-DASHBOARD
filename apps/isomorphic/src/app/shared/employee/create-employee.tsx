@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { SubmitHandler, Controller } from 'react-hook-form';
 import SelectLoader from '@core/components/loader/select-loader';
@@ -13,6 +13,11 @@ import {
   categoryFormSchema,
 } from '@/validators/create-category.schema';
 import UploadZone from '@core/ui/file-upload/upload-zone';
+import {
+  EmployeeFormInput,
+  employeeFormSchema,
+} from '@/validators/create-employee.schema';
+import axios from 'axios';
 
 // const Select = dynamic(() => import('rizzui').then((mod) => mod.Select), {
 //   ssr: false,
@@ -23,42 +28,6 @@ const QuillEditor = dynamic(() => import('@core/ui/quill-editor'), {
   ssr: false,
   loading: () => <QuillLoader className="col-span-full h-[168px]" />,
 });
-
-// Parent category option
-const parentCategoryOption = [
-  {
-    value: 'fruits',
-    label: 'Fruits',
-  },
-  {
-    value: 'grocery',
-    label: 'Grocery',
-  },
-  {
-    value: 'meat',
-    label: 'Meat',
-  },
-  {
-    value: 'cat food',
-    label: 'Cat Food',
-  },
-];
-
-// Type option
-const typeOption = [
-  {
-    value: 'fresh vegetables',
-    label: 'Fresh Vegetables',
-  },
-  {
-    value: 'diet foods',
-    label: 'Diet Foods',
-  },
-  {
-    value: 'green vegetables',
-    label: 'Green Vegetables',
-  },
-];
 
 // a reusable form wrapper component
 function HorizontalFormBlockWrapper({
@@ -109,31 +78,71 @@ export default function CreateEmployee({
 }: {
   id?: string;
   isModalView?: boolean;
-  category?: CategoryFormInput;
+  category?: EmployeeFormInput;
 }) {
   const [reset, setReset] = useState({});
   const [isLoading, setLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<CategoryFormInput> = (data) => {
+  const createEmployeeHandler = useCallback(
+    async (employee?: any) => {
+      // console.log("Month",date.getMonth());
+      // console.log("Year",date.getFullYear());
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_BE_HOST}/api/employee/create`,
+        { ...employee }
+      );
+
+      // setNewFarmers(data.farmers);
+    },
+    []
+    // [date]
+  );
+
+   const editEmployeeHandler = useCallback(
+    async (employee?: any) => {
+      // console.log("Month",date.getMonth());
+      // console.log("Year",date.getFullYear());
+      const { data } = await axios.put(
+        `${process.env.NEXT_PUBLIC_BE_HOST}/api/employee/edit`,
+        { ...employee, _id: id }
+      );
+
+      // setNewFarmers(data.farmers);
+    },
+    []
+    // [date]
+  );
+
+  const onSubmit: SubmitHandler<EmployeeFormInput> = (data) => {
     // set timeout ony required to display loading state of the create category button
     setLoading(true);
+    console.log('createEm data2 ->', data);
+
     setTimeout(() => {
       setLoading(false);
-      console.log('createCategory data ->', data);
+      console.log('createEm data ->', data);
+      if(id){
+        editEmployeeHandler(data);
+      }else{
+      createEmployeeHandler(data);
+
+      }
       setReset({
         name: '',
-        slug: '',
-        type: '',
-        parentCategory: '',
-        description: '',
-        images: '',
+        job: '',
+        image: '',
+        facebook: '',
+        line: '',
+        youtube: '',
+        instagram: '',
+        // image: ''
       });
     }, 600);
   };
 
   return (
-    <Form<CategoryFormInput>
-      validationSchema={categoryFormSchema}
+    <Form<EmployeeFormInput>
+      validationSchema={employeeFormSchema}
       resetValues={reset}
       onSubmit={onSubmit}
       useFormProps={{
@@ -142,116 +151,124 @@ export default function CreateEmployee({
       }}
       className="isomorphic-form flex flex-grow flex-col @container"
     >
-      {({ register, control, getValues, setValue, watch, formState: { errors } }) => (
-        <>
-          <div className="flex-grow pb-10">
+      {({
+        register,
+        control,
+        getValues,
+        reset,
+        setValue,
+        watch,
+        formState: { errors },
+      }) => {
+        useEffect(() => {
+          if (category) {
+            reset(category);
+          }
+        }, [category, reset]);
+        return (
+          <>
+            <div className="flex-grow pb-10">
+              <div
+                className={cn(
+                  'grid grid-cols-1',
+                  isModalView
+                    ? 'grid grid-cols-1 gap-8 divide-y divide-dashed divide-gray-200 @2xl:gap-10 @3xl:gap-12 [&>div]:pt-7 first:[&>div]:pt-0 @2xl:[&>div]:pt-9 @3xl:[&>div]:pt-11'
+                    : 'gap-5'
+                )}
+              >
+                <HorizontalFormBlockWrapper
+                  title={'Thêm thành viên:'}
+                  description={'Nhập những thông tin cơ bản của thành viên'}
+                  isModalView={isModalView}
+                >
+                  <Input
+                    label="Tên Thành Viên"
+                    placeholder="Họ Và Tên Của Thành Viên"
+                    {...register('name')}
+                    error={errors.name?.message}
+                  />
+
+                  <Input
+                    label="Tên Thành Viên Katakana"
+                    placeholder="Họ Và Tên Của Thành Viên"
+                    {...register('nameJP')}
+                    // error={errors.name?.message}
+                  />
+                  <Input
+                    label="Chức Vụ"
+                    placeholder="Chức Vụ Của Thành Viên"
+                    {...register('position')}
+                    // error={errors.name?.message}
+                  />
+                  <Input
+                    label="Chức Vụ Tiếng Nhật"
+                    placeholder="Chức Vụ Của Thành Viên"
+                    {...register('positionJP')}
+                    // error={errors.name?.message}
+                  />
+                  <Input
+                    label="Facebook"
+                    placeholder="Facebook"
+                    {...register('facebook')}
+                    // error={errors.name?.message}
+                  />
+                  <Input
+                    label="Line"
+                    placeholder="Line"
+                    {...register('line')}
+                    // error={errors.name?.message}
+                  />
+                  <Input
+                    label="Youtube"
+                    placeholder="Youtube"
+                    {...register('youtube')}
+                    // error={errors.name?.message}
+                  />
+                  <Input
+                    label="Instagram"
+                    placeholder="Instagram"
+                    {...register('instagram')}
+                    // error={errors.name?.message}
+                  />
+
+                  <div className="col-span-2"></div>
+                </HorizontalFormBlockWrapper>
+                <HorizontalFormBlockWrapper
+                  title="Tải lên hình ảnh"
+                  description="Tải lên hình ảnh thành viên"
+                  isModalView={isModalView}
+                >
+                  <UploadZone
+                    name="image"
+                    getValues={getValues}
+                    setValue={setValue}
+                    className="col-span-full"
+                    watch={watch}
+                  />
+                </HorizontalFormBlockWrapper>
+              </div>
+            </div>
+
             <div
               className={cn(
-                'grid grid-cols-1',
-                isModalView
-                  ? 'grid grid-cols-1 gap-8 divide-y divide-dashed divide-gray-200 @2xl:gap-10 @3xl:gap-12 [&>div]:pt-7 first:[&>div]:pt-0 @2xl:[&>div]:pt-9 @3xl:[&>div]:pt-11'
-                  : 'gap-5'
+                'sticky bottom-0 z-40 flex items-center justify-end gap-3 bg-gray-0/10 backdrop-blur @lg:gap-4 @xl:grid @xl:auto-cols-max @xl:grid-flow-col',
+                isModalView ? '-mx-10 -mb-7 px-10 py-5' : 'py-1'
               )}
             >
-              <HorizontalFormBlockWrapper
-                title={'Add new category:'}
-                description={'Edit your category information from here'}
-                isModalView={isModalView}
-              >
-               {/* <Input
-                  label="Category Name"
-                  placeholder="category name"
-                  {...register('name')}
-                  error={errors.name?.message}
-                /> */}
-                  {/*<Input
-                  label="Slug"
-                  placeholder="slug"
-                  {...register('slug')}
-                  error={errors.slug?.message}
-                />
-                <Controller
-                  name="parentCategory"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <Select
-                      dropdownClassName="!z-0"
-                      options={parentCategoryOption}
-                      value={value}
-                      onChange={onChange}
-                      label="Parent Category"
-                      error={errors?.parentCategory?.message as string}
-                      getOptionValue={(option) => option.label}
-                    />
-                  )}
-                />
-                <Controller
-                  name="type"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <Select
-                      dropdownClassName="!z-0"
-                      options={typeOption}
-                      value={value}
-                      onChange={onChange}
-                      label="Display Type"
-                      error={errors?.type?.message as string}
-                      getOptionValue={(option) => option.label}
-                    />
-                  )}
-                /> */}
-
-                <div className="col-span-2">
-                  {/* <Controller
-                    control={control}
-                    name="description"
-                    render={({ field: { onChange, value } }) => (
-                      <QuillEditor
-                        value={value}
-                        onChange={onChange}
-                        label="Description"
-                        className="[&>.ql-container_.ql-editor]:min-h-[100px]"
-                        labelClassName="font-medium text-gray-700 dark:text-gray-600 mb-1.5"
-                      />
-                    )}
-                  /> */}
-                </div>
-              </HorizontalFormBlockWrapper>
-              <HorizontalFormBlockWrapper
-                title="Upload new thumbnail image"
-                description="Upload your product image gallery here"
-                isModalView={isModalView}
-              >
-                {/* <UploadZone
-                  name="images"
-                  getValues={getValues}
-                  setValue={setValue}
-                  className="col-span-full"
-                  watch={watch}
-                /> */}
-              </HorizontalFormBlockWrapper>
-            </div>
-          </div>
-
-          <div
-            className={cn(
-              'sticky bottom-0 z-40 flex items-center justify-end gap-3 bg-gray-0/10 backdrop-blur @lg:gap-4 @xl:grid @xl:auto-cols-max @xl:grid-flow-col',
-              isModalView ? '-mx-10 -mb-7 px-10 py-5' : 'py-1'
-            )}
-          >
-            <Button variant="outline" className="w-full @xl:w-auto">
+              {/* <Button variant="outline" className="w-full @xl:w-auto">
               Save as Draft
-            </Button>
-            <Button
-              type="submit"
-              isLoading={isLoading}
-              className="w-full @xl:w-auto"
-            >
-              {id ? 'Update' : 'Create'} Category
-            </Button>
-          </div>
-        </>
-      )}
+            </Button> */}
+              <Button
+                type="submit"
+                isLoading={isLoading}
+                className="w-full @xl:w-auto"
+              >
+                {id ? 'Cập nhập' : 'Thêm'} Thành Viên
+              </Button>
+            </div>
+          </>
+        );
+      }}
     </Form>
   );
 }
