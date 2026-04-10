@@ -32,7 +32,7 @@ export const categoriesColumns = [
       <figure className="relative aspect-square w-12 overflow-hidden rounded-lg bg-gray-100">
         <Image
           alt={row.original.name}
-          src={row.original.image}
+          src={""}
           fill
           sizes="(max-width: 768px) 100vw"
           className="object-cover"
