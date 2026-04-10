@@ -98,7 +98,7 @@ export default function CreateEmployee({
     // [date]
   );
 
-   const editEmployeeHandler = useCallback(
+  const editEmployeeHandler = useCallback(
     async (employee?: any) => {
       // console.log("Month",date.getMonth());
       // console.log("Year",date.getFullYear());
@@ -121,11 +121,10 @@ export default function CreateEmployee({
     setTimeout(() => {
       setLoading(false);
       console.log('createEm data ->', data);
-      if(id){
+      if (id) {
         editEmployeeHandler(data);
-      }else{
-      createEmployeeHandler(data);
-
+      } else {
+        createEmployeeHandler(data);
       }
       setReset({
         name: '',
