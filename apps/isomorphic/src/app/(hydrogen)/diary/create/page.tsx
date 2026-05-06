@@ -1,0 +1,46 @@
+// import CreateCategory from '@/app/shared/ecommerce/category/create-category';
+import PageHeader from '@/app/shared/page-header';
+import { Button } from 'rizzui/button';
+import { routes } from '@/config/routes';
+import Link from 'next/link';
+import { metaObject } from '@/config/site.config';
+import CreateDiary from '@/app/shared/diary/create-diary';
+
+export const metadata = {
+  ...metaObject('Create a Diary'),
+};
+
+const pageHeader = {
+  title: 'Thêm nhật ký',
+  breadcrumb: [
+    {
+      href: routes.sanchouku.diaryList,
+      name: 'SANCHOUKU',
+    },
+    {
+      href: routes.sanchouku.diaryList,
+      name: 'Danh Sách Nhật Ký',
+    },
+    {
+      name: 'Tạo',
+    },
+  ],
+};
+
+export default function CreateDiaryPage() {
+  return (
+    <>
+      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
+        <Link
+          href={routes.eCommerce.categories}
+          className="mt-4 w-full @lg:mt-0 @lg:w-auto"
+        >
+          <Button as="span" className="w-full @lg:w-auto" variant="outline">
+            Cancel
+          </Button>
+        </Link>
+      </PageHeader>
+      <CreateDiary />
+    </>
+  );
+}

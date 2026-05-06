@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import ReactQuill from "react-quill-new";
 import { FieldError } from "rizzui";
 import cn from "../utils/class-names";
@@ -24,59 +25,89 @@ export default function QuillEditor({
   toolbarPosition = "top",
   ...props
 }: QuillEditorProps) {
-  const quillModules = {
-    toolbar: [
-      // [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  const quillRef = useRef<ReactQuill | null>(null);
 
-      ["bold", "italic", "underline", "strike"], // toggled buttons
-      ["blockquote", "code-block"],
+  // ✅ HANDLE UPLOAD ẢNH
+  const handleImageUpload = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
 
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ script: "sub" }, { script: "super" }], // superscript/subscript
-      [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file) return;
 
-      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-      [{ font: [] }],
-      [{ align: [] }],
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("path", "quill");
 
-      ["clean"],
-    ],
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BE_HOST}/api/cloudinary`,
+          {
+            method: "POST",
+            body: formData,
+          },
+        );
+
+        const data = (await res.json()) as { url: string }[];
+        const imageUrl = data[0]?.url;
+
+        if (!imageUrl) throw new Error("Upload failed");
+
+        const quill = quillRef.current?.getEditor();
+        const range = quill?.getSelection(true);
+
+        if (quill && range) {
+          quill.insertEmbed(range.index, "image", imageUrl);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Upload ảnh thất bại");
+      }
+    };
   };
 
-  // const quillFormats = [
-  //   'header',
-  //   'bold',
-  //   'italic',
-  //   'underline',
-  //   'strike',
-  //   'list',
-  //   'bullet',
-  //   'blockquote',
-  //   'code-block',
-  //   'script',
-  //   'indent',
-  //   'color',
-  //   'background',
-  //   'font',
-  //   'align',
-  // ];
+  // ✅ MODULES (gắn handler)
+  const quillModules = {
+    toolbar: {
+      container: [
+        ["bold", "italic", "underline", "strike"],
+        ["link", "image"],
+        ["blockquote", "code-block"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        [{ script: "sub" }, { script: "super" }],
+        [{ indent: "-1" }, { indent: "+1" }],
+        [{ color: [] }, { background: [] }],
+        [{ font: [] }],
+        [{ align: [] }],
+        ["clean"],
+      ],
+      handlers: {
+        image: handleImageUpload, // 👈 quan trọng
+      },
+    },
+  };
 
   return (
     <div className={cn(className)}>
       {label && (
         <label className={cn("mb-1.5 block", labelClassName)}>{label}</label>
       )}
+
       <ReactQuill
+        ref={quillRef} // 👈 cần có
         theme="snow"
         modules={quillModules}
-        // formats={quillFormats}
         className={cn(
           "react-quill",
           toolbarPosition === "bottom" && "react-quill-toolbar-bottom relative",
-          className
+          className,
         )}
         {...props}
       />
+
       {error && (
         <FieldError size="md" error={error} className={errorClassName} />
       )}

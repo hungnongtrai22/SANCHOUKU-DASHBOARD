@@ -7,8 +7,10 @@ import { PiCalendarBlank, PiCaretDownBold } from "react-icons/pi";
 import ReactDatePicker, {
   type DatePickerProps as ReactDatePickerProps,
 } from "react-datepicker";
+import { registerLocale } from "react-datepicker";
+import { vi } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
-
+registerLocale("vi", vi);
 const calendarContainerClasses = {
   base: "[&.react-datepicker]:shadow-lg [&.react-datepicker]:border-gray-100 [&.react-datepicker]:rounded-md",
   monthContainer: {
@@ -59,10 +61,12 @@ export const DatePicker = ({
     <div
       className={cn(
         "flex [&_.react-datepicker-wrapper]:flex [&_.react-datepicker-wrapper]:w-full",
-        props?.className
+        props?.className,
       )}
     >
       <ReactDatePicker
+        withPortal
+        locale="vi"
         customInput={
           customInput || (
             <Input
@@ -71,7 +75,7 @@ export const DatePicker = ({
                 <PiCaretDownBold
                   className={cn(
                     "h-4 w-4 text-gray-500 transition",
-                    isCalenderOpen && "rotate-180"
+                    isCalenderOpen && "rotate-180",
                   )}
                 />
               }
@@ -91,7 +95,7 @@ export const DatePicker = ({
           prevNextButtonClasses.children.border,
           prevNextButtonClasses.children.size,
           timeOnlyClasses.base,
-          calendarClassName
+          calendarClassName,
         )}
         popperClassName={cn(popperClasses.base, popperClassName)}
         dateFormat={dateFormat}
