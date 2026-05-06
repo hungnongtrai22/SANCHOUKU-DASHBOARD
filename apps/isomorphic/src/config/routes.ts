@@ -3,6 +3,9 @@ export const routes = {
     employeeList: '/employee/list',
     employeeCreate: '/employee/create',
     employeeEdit: (id: string) => `/employee/${id}/edit`,
+    diaryList: '/diary/list',
+    diaryCreate: '/diary/create',
+    diaryEdit: (id: string) => `/diary/${id}/edit`,
     center: '/center/create'
   },
   farmer: {
