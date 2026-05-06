@@ -8,9 +8,9 @@ import ReactDatePicker, {
   type DatePickerProps as ReactDatePickerProps,
 } from "react-datepicker";
 import { registerLocale } from "react-datepicker";
-import { vi } from "date-fns/locale";
+// import { vi } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
-registerLocale("vi", vi);
+// registerLocale("vi", vi);
 const calendarContainerClasses = {
   base: "[&.react-datepicker]:shadow-lg [&.react-datepicker]:border-gray-100 [&.react-datepicker]:rounded-md",
   monthContainer: {
