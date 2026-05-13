@@ -30,7 +30,7 @@ type PageHeaderTypes = {
   className?: string;
 };
 
-export default function EmployeePageHeader({
+export default function DiaryPageHeader({
   title,
   breadcrumb,
   className,
@@ -50,7 +50,7 @@ export default function EmployeePageHeader({
           }
         >
           <PiPlusBold className="me-1 h-4 w-4" />
-          Add Category
+          Add Diary
         </Button>
       </PageHeader>
     </>

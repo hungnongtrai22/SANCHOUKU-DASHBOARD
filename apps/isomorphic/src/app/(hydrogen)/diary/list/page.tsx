@@ -1,8 +1,9 @@
 import { routes } from '@/config/routes';
 // import CategoryTable from '@/app/shared/ecommerce/category/category-list/table';
-import EmployeePageHeader from './diary-page-header';
+import DiaryPageHeader from './diary-page-header';
 import { metaObject } from '@/config/site.config';
-import EmployeeTable from '@/app/shared/employee/employee-list/table';
+// import EmployeeTable from '@/app/shared/employee/employee-list/table';
+import DiaryTable from '@/app/shared/diary/diary-list/table';
 
 export const metadata = {
   ...metaObject('Categories'),
@@ -16,8 +17,8 @@ const pageHeader = {
       name: 'SANCHOUKU',
     },
     {
-      href: routes.sanchouku.employeeList,
-      name: 'Danh Sách Thành Viên',
+      href: routes.sanchouku.diaryList,
+      name: 'Danh Sách Nhật Ký Canh Tác',
     },
     {
       name: 'Danh Sách',
@@ -28,11 +29,11 @@ const pageHeader = {
 export default function EmployeesPage() {
   return (
     <>
-      <EmployeePageHeader
+      <DiaryPageHeader
         title={pageHeader.title}
         breadcrumb={pageHeader.breadcrumb}
       />
-      <EmployeeTable />
+      <DiaryTable />
     </>
   );
 }
