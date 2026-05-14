@@ -12,6 +12,7 @@ export const categoryFormSchema = z.object({
   regulation: z.array(fileSchema).optional(),
   pgs: z.any(),
   cgap: z.any(),
+  images: z.any()
 });
 
 // generate form types from zod validation schema

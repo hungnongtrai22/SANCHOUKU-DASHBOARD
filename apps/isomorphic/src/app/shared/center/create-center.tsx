@@ -120,6 +120,7 @@ export default function CreateCenter({
     async (center?: any) => {
       // console.log("Month",date.getMonth());
       // console.log("Year",date.getFullYear());
+      console.log("TEST", center)
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_BE_HOST}/api/center/create`,
         { ...center }
@@ -142,6 +143,7 @@ export default function CreateCenter({
         regulation: '',
         pgs: '',
         cgap: '',
+        iamges: '',
       });
     }, 600);
   };
@@ -271,6 +273,19 @@ export default function CreateCenter({
                 >
                   <UploadZone
                     name="pgs"
+                    getValues={getValues}
+                    setValue={setValue}
+                    className="col-span-full"
+                    watch={watch}
+                  />
+                </HorizontalFormBlockWrapper>
+                 <HorizontalFormBlockWrapper
+                  title="Hình Ảnh Của Trung Tâm"
+                  description="Tải lên các hình ảnh của trung tâm"
+                  isModalView={isModalView}
+                >
+                  <UploadZone
+                    name="images"
                     getValues={getValues}
                     setValue={setValue}
                     className="col-span-full"
